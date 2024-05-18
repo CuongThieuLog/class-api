@@ -4,7 +4,15 @@ const fs = require("fs");
 class DocumentController {
   async getAll(req, res) {
     try {
-      const documents = await Document.find();
+      const documents = await Document.find()
+        .populate({
+          path: "uploadedBy",
+          select: "_id first_name last_name email role",
+        })
+        .populate({
+          path: "submissions.student",
+          select: "_id first_name last_name email role",
+        });
       res.json({ data: documents });
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -15,7 +23,15 @@ class DocumentController {
     try {
       const { id } = req.params;
 
-      const document = await Document.findById(id);
+      const document = await Document.findById(id)
+        .populate({
+          path: "uploadedBy",
+          select: "_id first_name last_name email role",
+        })
+        .populate({
+          path: "submissions.student",
+          select: "_id first_name last_name email role",
+        });
 
       if (!document) {
         return res.status(404).json({ error: "Document not found" });
