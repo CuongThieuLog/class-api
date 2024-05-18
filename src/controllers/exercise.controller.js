@@ -115,7 +115,7 @@ class ExerciseController {
     const exerciseId = req.params.id;
 
     try {
-      const exercise = await Exercise.findByIdAndUpdate(exerciseId);
+      const exercise = await Exercise.findByIdAndDelete(exerciseId);
       if (!exercise) {
         return res.status(404).json({ error: "Exercise not found" });
       }

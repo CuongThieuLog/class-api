@@ -103,7 +103,7 @@ class DocumentController {
         fs.unlinkSync(filePath);
       }
 
-      await document.remove();
+      await document.deleteOne();
 
       res.json({ message: "Document deleted successfully" });
     } catch (err) {
