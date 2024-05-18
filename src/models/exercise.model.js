@@ -26,6 +26,10 @@ const ExerciseSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        created_at: {
+          type: Date,
+          default: Date.now,
+        },
         comments: [
           {
             teacher: {
@@ -36,6 +40,10 @@ const ExerciseSchema = new mongoose.Schema(
             comment: {
               type: String,
               required: true,
+            },
+            created_at: {
+              type: Date,
+              default: Date.now,
             },
           },
         ],
