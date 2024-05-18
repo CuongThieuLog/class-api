@@ -29,7 +29,13 @@ class AuthController {
       }
 
       res.send({
-        user: { _id: user._id, role: user.role, ...user.toAuthJSON() },
+        user: {
+          _id: user._id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          role: user.role,
+          ...user.toAuthJSON(),
+        },
       });
     } catch (error) {
       res.status(400).send({ error: "Login failed" });

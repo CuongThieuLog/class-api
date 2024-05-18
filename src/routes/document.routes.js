@@ -14,5 +14,11 @@ router.put(
 );
 router.delete("/delete/:id", auth, DocumentController.remove);
 router.get("/download/:id", auth, DocumentController.download);
+router.post(
+  "/submission-student/:id",
+  auth,
+  upload.single("file"),
+  DocumentController.uploadSubmissionStudent
+);
 
 module.exports = router;

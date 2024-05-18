@@ -120,6 +120,37 @@ class DocumentController {
       res.status(500).json({ error: err.message });
     }
   }
+
+  async uploadSubmissionStudent(req, res) {
+    try {
+      const { id } = req.params;
+      const { content } = req.body;
+      const uploadedBy = req.user._id;
+      const filePath = req.file.path;
+
+      const document = await Document.findById(id);
+
+      if (!document) {
+        return res.status(404).json({ error: "Document not found" });
+      }
+
+      const newSubmission = {
+        student: uploadedBy,
+        filePath: filePath,
+        content: content,
+      };
+
+      document.submissions.push(newSubmission);
+      await document.save();
+
+      res.status(201).json({
+        message: "Submission student uploaded successfully",
+        data: newSubmission,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
 }
 
 module.exports = new DocumentController();
