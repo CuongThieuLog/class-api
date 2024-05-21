@@ -10,6 +10,12 @@ const DocumentSchema = new mongoose.Schema(
       type: String,
       required: [true, "File path can't be blank"],
     },
+    type: {
+      type: String,
+      enum: ["writing", "listening", "reading", "speaking"],
+      required: true,
+      default: "writing",
+    },
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

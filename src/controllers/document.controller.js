@@ -45,11 +45,11 @@ class DocumentController {
 
   async create(req, res) {
     try {
-      const { title } = req.body;
+      const { title, type } = req.body;
       const uploadedBy = req.user._id;
       const filePath = req.file.path;
 
-      const document = new Document({ title, filePath, uploadedBy });
+      const document = new Document({ title, filePath, type, uploadedBy });
       await document.save();
 
       res.status(201).json({ data: document });
@@ -61,7 +61,7 @@ class DocumentController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { title } = req.body;
+      const { title, type } = req.body;
 
       let document = await Document.findById(id);
 
@@ -79,6 +79,7 @@ class DocumentController {
       }
 
       document.title = title;
+      document.type = type;
 
       await document.save();
 
