@@ -29,6 +29,6 @@ router.post(
   DocumentController.uploadSubmissionStudent
 );
 
-router.get("/preview/:id/", DocumentController.preview);
+// router.get("/preview/:id/", DocumentController.preview);
 
 module.exports = router;
