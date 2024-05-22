@@ -4,7 +4,14 @@ const fs = require("fs");
 class DocumentController {
   async getAll(req, res) {
     try {
-      const documents = await Document.find()
+      const { type } = req.query;
+
+      let query = {};
+      if (type) {
+        query.type = type;
+      }
+
+      const documents = await Document.find(query)
         .populate({
           path: "uploadedBy",
           select: "_id first_name last_name email role",
