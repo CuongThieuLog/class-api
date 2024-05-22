@@ -32,7 +32,14 @@ class UserController {
     const { first_name, last_name, email, password, role } = req.body;
     const defaultPassword = "class@123";
     try {
+      const existingUser = await User.findOne({ email });
+
+      if (existingUser) {
+        return res.status(400).json({ error: "Email already exists" });
+      }
+
       const hashedPassword = await bcrypt.hash(password || defaultPassword, 8);
+
       const newUser = new User({
         first_name,
         last_name,
@@ -40,7 +47,9 @@ class UserController {
         password: hashedPassword,
         role,
       });
+
       await newUser.save();
+
       res.status(201).json({ data: newUser });
     } catch (error) {
       res.status(400).json({ error: "Bad Request" });
