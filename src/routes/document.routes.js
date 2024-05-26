@@ -28,6 +28,10 @@ router.post(
   upload.single("file"),
   DocumentController.uploadSubmissionStudent
 );
+router.get(
+  "/download/:documentId/submissions/:submissionId",
+  DocumentController.downloadSubmissionFile
+);
 
 // router.get("/preview/:id/", DocumentController.preview);
 

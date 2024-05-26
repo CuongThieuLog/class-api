@@ -175,6 +175,38 @@ class DocumentController {
       res.status(500).json({ error: err.message });
     }
   }
+
+  async downloadSubmissionFile(req, res) {
+    try {
+      const { documentId, submissionId } = req.params;
+
+      const document = await Document.findById(documentId);
+      if (!document) {
+        return res.status(404).json({ error: "Document not found" });
+      }
+
+      const submission = document.submissions.id(submissionId);
+      if (!submission) {
+        return res.status(404).json({ error: "Submission not found" });
+      }
+
+      const filePath = submission.filePath;
+
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: "File not found" });
+      }
+
+      res.download(filePath, (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: "Failed to download file" });
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: err.message });
+    }
+  }
 }
 
 module.exports = new DocumentController();
